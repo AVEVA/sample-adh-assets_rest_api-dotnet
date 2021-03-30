@@ -137,6 +137,7 @@ namespace AssetsRestApi
                     }
 
                     // ASSETS:
+                    // Step 5
                     // Create Simple Asset
                     Console.WriteLine("Creating Basic Asset");
                     var simpleAsset = new Asset
@@ -158,6 +159,7 @@ namespace AssetsRestApi
                         throw new HttpRequestException();
                     }
 
+                    // Step 6
                     // Create AssetType + Asset
                     var typeReference = new TypeReferenceDto
                     {
@@ -223,6 +225,7 @@ namespace AssetsRestApi
                         throw new HttpRequestException();
                     }
 
+                    // Step 7
                     Console.WriteLine("Creating Asset with AssetType");
                     var streamReference = new StreamReferenceDto
                     {
@@ -267,6 +270,7 @@ namespace AssetsRestApi
                         throw new HttpRequestException();
                     }
 
+                    // Step 8
                     // Get Asset 
                     Console.WriteLine("Getting Asset Back");
                     response = await httpClient.GetAsync(
@@ -276,6 +280,7 @@ namespace AssetsRestApi
                     var returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine($"Returned Asset has Id {returnedAsset.Id} and Name {returnedAsset.Name} \n");
 
+                    // Step 9
                     // Get Resolved Asset
                     // We did not set a Description on Asset, and it should be inherited from AssetType
                     Console.WriteLine("Getting Resolved Asset Back");
@@ -291,6 +296,7 @@ namespace AssetsRestApi
                         throw new HttpRequestException();
                     }
 
+                    // Step 10
                     // Update Asset
                     // Changing the Description 
                     var updatedAsset = new Asset
@@ -316,6 +322,7 @@ namespace AssetsRestApi
                         throw new HttpRequestException();
                     }
 
+                    // Step 11
                     // Getting Asset Back and looking at Inheritance 
                     Console.WriteLine("Getting the updated asset back");
                     response = await httpClient.GetAsync(
@@ -330,6 +337,7 @@ namespace AssetsRestApi
 
                     Console.WriteLine(updatedAssetReturned.ToString());
 
+                    // Step 12
                     // Actions on Asset or AssetType
                     // We can take data directly from an asset
                     Console.WriteLine("\n Getting Last data on Asset");
@@ -340,8 +348,8 @@ namespace AssetsRestApi
                     var data = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(data.ToString());
 
+                    // Step 13
                     Console.WriteLine("\n Getting Last Status On Asset");
-
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/Status/Last", UriKind.Relative))
                         .ConfigureAwait(false);
@@ -349,6 +357,7 @@ namespace AssetsRestApi
                     var status = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(status.ToString());
 
+                    // Step 14
                     Console.WriteLine("\n Searching for Asset");
                     Console.WriteLine($"Searching for asset with AssetTypeId '{AssetTypeId}'");
                     response = await httpClient.GetAsync(
@@ -370,6 +379,7 @@ namespace AssetsRestApi
                 }
                 finally
                 {
+                    // Step 15
                     Console.WriteLine();
                     Console.WriteLine("Cleaning up");
 

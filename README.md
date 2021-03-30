@@ -2,7 +2,7 @@
 
 **Version:** 1.0.0
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-assets_rest_api-dotnet?repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=refs%2Fpull%2F1%2Fmerge)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=refs%2Fpull%2F1%2Fmerge)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-assets_rest_api-dotnet?repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main)
 
 Developed against DotNet 5.0.
 
