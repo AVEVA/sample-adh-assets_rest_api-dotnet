@@ -50,7 +50,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: /SdsRestApiCore
+          filePath: /AssetRestApi
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AssetRestApiCore\AssetsRestApi.csproj" />
+    <ProjectReference Include="..\AssetRestApi\AssetsRestApi.csproj" />
   </ItemGroup>
 
 </Project>
