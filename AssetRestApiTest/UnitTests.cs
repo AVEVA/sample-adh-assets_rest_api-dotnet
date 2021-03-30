@@ -1,7 +1,7 @@
 ﻿using AssetsRestApi;
 using Xunit;
 
-namespace AssetsRestApiTest
+namespace AssetsRestApiTests
 {
     public class UnitTests
     {

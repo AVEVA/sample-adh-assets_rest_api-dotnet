@@ -33,25 +33,25 @@ namespace AssetsRestApi
             var apiVersion = _configuration["ApiVersion"];
 
             // ==== IDs ====
-            const string streamId = "WaveStreamId";
-            const string typeId = "WaveDataTypeId";
-            const string simpleAssetId = "simpleAsset";
-            const string assetId = "SampleAssetId";
-            const string assetTypeId = "SampleAssetTypeId";
-            const string streamReferenceId = "streamRefOnAsset";
-            const string metadataOnAssetTypeId = "MetadataOnAssetType";
-            const string metadataOnAssetId = "MetadataOnAsset";
+            const string StreamId = "WaveStreamId";
+            const string TypeId = "WaveDataTypeId";
+            const string SimpleAssetId = "simpleAsset";
+            const string AssetId = "SampleAssetId";
+            const string AssetTypeId = "SampleAssetTypeId";
+            const string StreamReferenceId = "streamRefOnAsset";
+            const string MetadataOnAssetTypeId = "MetadataOnAssetType";
+            const string MetadataOnAssetId = "MetadataOnAsset";
 
             // ====== Names =====
-            const string simpleAssetName = "simpleAssetName";
-            const string assetName = "myAssetName";
-            const string assetTypeName = "myAssetTypeName";
-            const string streamReferenceName = "StreamNameSetOnType";
-            const string metadataOnAssetTypeName = "MetadataWasSetOnType";
-            const string metadataOnAssetName = "MetadataWasSetOnAsset";
-            const string uomOnAssetType = "V";
-            const string uomOnAsset = "mV";
-            const string statusName = "OrderStatus";
+            const string SimpleAssetName = "simpleAssetName";
+            const string AssetName = "myAssetName";
+            const string AssetTypeName = "myAssetTypeName";
+            const string StreamReferenceName = "StreamNameSetOnType";
+            const string MetadataOnAssetTypeName = "MetadataWasSetOnType";
+            const string MetadataOnAssetName = "MetadataWasSetOnAsset";
+            const string UomOnAssetType = "V";
+            const string UomOnAsset = "mV";
+            const string StatusName = "OrderStatus";
 
             // Step 1
             _securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
@@ -77,7 +77,7 @@ namespace AssetsRestApi
                     // create a SdsType
                     Console.WriteLine("Creating an SdsType");
                     Console.WriteLine(clientId);
-                    var waveType = BuildWaveDataType(typeId);
+                    var waveType = BuildWaveDataType(TypeId);
                     using var content2 = new StringContent(JsonConvert.SerializeObject(waveType));
                     var response =
                         await httpClient.PostAsync(
@@ -91,7 +91,7 @@ namespace AssetsRestApi
                     Console.WriteLine("Creating an SdsStream");
                     var waveStream = new SdsStream
                     {
-                        Id = streamId,
+                        Id = StreamId,
                         Name = "WaveStream",
                         TypeId = waveType.Id,
                     };
@@ -118,7 +118,7 @@ namespace AssetsRestApi
                     CheckIfResponseWasSuccessful(response);
 
                     // insert a list of events
-                    List<WaveData> waves = new List<WaveData>();
+                    var waves = new List<WaveData>();
                     for (int i = 2; i < 20; i += 2)
                     {
                         WaveData newEvent = GetWave(i, 2.0);
@@ -141,15 +141,15 @@ namespace AssetsRestApi
                     Console.WriteLine("Creating Basic Asset");
                     var simpleAsset = new Asset
                     {
-                        Id = simpleAssetId,
-                        Name = simpleAssetName,
+                        Id = SimpleAssetId,
+                        Name = SimpleAssetName,
                         Description = "My First Asset!",
                     };
 
                     using var simpleAssetString = new StringContent(JsonConvert.SerializeObject(simpleAsset));
                     simpleAssetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{simpleAssetId}", UriKind.Relative),
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{SimpleAssetId}", UriKind.Relative),
                             simpleAssetString)
                         .ConfigureAwait(false);
 
@@ -161,23 +161,23 @@ namespace AssetsRestApi
                     // Create AssetType + Asset
                     var typeReference = new TypeReferenceDto
                     {
-                        StreamReferenceId = streamReferenceId,
-                        StreamReferenceName = streamReferenceName,
-                        TypeId = typeId,
+                        StreamReferenceId = StreamReferenceId,
+                        StreamReferenceName = StreamReferenceName,
+                        TypeId = TypeId,
                     };
 
                     var metadataOnType = new MetadataDto
                     {
-                        Id = metadataOnAssetTypeId,
-                        Name = metadataOnAssetTypeName,
+                        Id = MetadataOnAssetTypeId,
+                        Name = MetadataOnAssetTypeName,
                         Description = "We are going to use this metadata to show inheritance",
-                        Uom = uomOnAssetType,
+                        Uom = UomOnAssetType,
                         SdsTypeCode = SdsTypeCode.Int64,
                     };
 
                     var statusMapping = new StatusMappingDto
                     {
-                        Name = statusName,
+                        Name = StatusName,
                         StreamReferenceId = typeReference.StreamReferenceId,
                         StreamPropertyId = nameof(wave.Order),
                         ValueStatusMappings = new List<ValueStatusMappingDto>
@@ -203,8 +203,8 @@ namespace AssetsRestApi
                     Console.WriteLine("Creating AssetType");
                     var assetType = new AssetType
                     {
-                        Id = assetTypeId,
-                        Name = assetTypeName,
+                        Id = AssetTypeId,
+                        Name = AssetTypeName,
                         Description = "My first AssetType!",
                         TypeReferences = new List<TypeReferenceDto> { typeReference },
                         Metadata = new List<MetadataDto> { metadataOnType },
@@ -214,7 +214,7 @@ namespace AssetsRestApi
                     using var assetTypeString = new StringContent(JsonConvert.SerializeObject(assetType));
                     assetTypeString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{assetTypeId}", UriKind.Relative),
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{AssetTypeId}", UriKind.Relative),
                             assetTypeString)
                         .ConfigureAwait(false);
 
@@ -226,31 +226,31 @@ namespace AssetsRestApi
                     Console.WriteLine("Creating Asset with AssetType");
                     var streamReference = new StreamReferenceDto
                     {
-                        Id = streamReferenceId,
+                        Id = StreamReferenceId,
                         StreamId = waveStream.Id,
                         Description = "streamReference On Asset",
                     };
 
                     var metadataInherited = new MetadataDto
                     {
-                        Id = metadataOnAssetTypeId,
+                        Id = MetadataOnAssetTypeId,
                         Description = "Metadata Name, SdsTypeCode and Uom Inherited from AssetType",
                     };
 
                     var metadataOnAsset = new MetadataDto
                     {
-                        Id = metadataOnAssetId,
-                        Name = metadataOnAssetName,
+                        Id = MetadataOnAssetId,
+                        Name = MetadataOnAssetName,
                         Description = "Simple Metadata Set on Asset",
-                        Uom = uomOnAsset,
+                        Uom = UomOnAsset,
                         SdsTypeCode = SdsTypeCode.Double,
                     };
 
                     var asset = new Asset
                     {
-                        Id = assetId,
-                        Name = assetName,
-                        AssetTypeId = assetTypeId,
+                        Id = AssetId,
+                        Name = AssetName,
+                        AssetTypeId = AssetTypeId,
                         StreamReferences = new List<StreamReferenceDto> { streamReference },
                         Metadata = new List<MetadataDto> { metadataOnAsset, metadataInherited },
                     };
@@ -258,7 +258,7 @@ namespace AssetsRestApi
                     using var assetString = new StringContent(JsonConvert.SerializeObject(asset));
                     assetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}", UriKind.Relative),
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
                             assetString)
                         .ConfigureAwait(false);
 
@@ -270,7 +270,7 @@ namespace AssetsRestApi
                     // Get Asset 
                     Console.WriteLine("Getting Asset Back");
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative))
                         .ConfigureAwait(false);
 
                     var returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -280,7 +280,7 @@ namespace AssetsRestApi
                     // We did not set a Description on Asset, and it should be inherited from AssetType
                     Console.WriteLine("Getting Resolved Asset Back");
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}/resolved", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/resolved", UriKind.Relative))
                         .ConfigureAwait(false);
 
                     returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -295,9 +295,9 @@ namespace AssetsRestApi
                     // Changing the Description 
                     var updatedAsset = new Asset
                     {
-                        Id = assetId,
-                        Name = assetName,
-                        AssetTypeId = assetTypeId,
+                        Id = AssetId,
+                        Name = AssetName,
+                        AssetTypeId = AssetTypeId,
                         Description = "My First Asset with AssetType!",
                         StreamReferences = new List<StreamReferenceDto> { streamReference },
                         Metadata = new List<MetadataDto> { metadataOnAsset, metadataInherited },
@@ -307,7 +307,7 @@ namespace AssetsRestApi
                     using var updatedAssetString = new StringContent(JsonConvert.SerializeObject(updatedAsset));
                     updatedAssetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PutAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}", UriKind.Relative),
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
                             updatedAssetString)
                         .ConfigureAwait(false);
 
@@ -319,7 +319,7 @@ namespace AssetsRestApi
                     // Getting Asset Back and looking at Inheritance 
                     Console.WriteLine("Getting the updated asset back");
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative))
                         .ConfigureAwait(false);
                     var updatedAssetReturned = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
@@ -334,7 +334,7 @@ namespace AssetsRestApi
                     // We can take data directly from an asset
                     Console.WriteLine("\n Getting Last data on Asset");
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}/Data/Last", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/Data/Last", UriKind.Relative))
                         .ConfigureAwait(false);
 
                     var data = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -343,16 +343,16 @@ namespace AssetsRestApi
                     Console.WriteLine("\n Getting Last Status On Asset");
 
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}/Status/Last", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/Status/Last", UriKind.Relative))
                         .ConfigureAwait(false);
 
                     var status = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(status.ToString());
 
                     Console.WriteLine("\n Searching for Asset");
-                    Console.WriteLine($"Searching for asset with AssetTypeId '{assetTypeId}'");
+                    Console.WriteLine($"Searching for asset with AssetTypeId '{AssetTypeId}'");
                     response = await httpClient.GetAsync(
-                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets?query=AssetTypeId:{assetTypeId}", UriKind.Relative))
+                            new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets?query=AssetTypeId:{AssetTypeId}", UriKind.Relative))
                         .ConfigureAwait(false);
 
                     if (!response.IsSuccessStatusCode)
@@ -374,15 +374,15 @@ namespace AssetsRestApi
                     Console.WriteLine("Cleaning up");
 
                     Console.WriteLine("Deleting Simple Asset");
-                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{simpleAssetId}");
+                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{SimpleAssetId}");
                     Console.WriteLine("Deleting Asset");
-                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{assetId}");
+                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}");
                     Console.WriteLine("Deleting AssetType");
-                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{assetTypeId}");
+                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{AssetTypeId}");
                     Console.WriteLine("Deleting stream");
-                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{streamId}");
+                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{StreamId}");
                     Console.WriteLine("Deleting types");
-                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{typeId}");
+                    RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{TypeId}");
                     Console.WriteLine("Complete!");
                 }
             }
