@@ -6,7 +6,7 @@ namespace AssetsRestApiTests
     public class UnitTests
     {
         [Fact]
-        public void AssetRestApiUnitTest()
+        public void AssetsRestApiUnitTest()
         {
             Assert.True(Program.MainAsync(true).Result);
         }
