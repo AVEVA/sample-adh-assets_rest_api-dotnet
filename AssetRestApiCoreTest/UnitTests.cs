@@ -1,7 +1,7 @@
-﻿using AssetRestApiCore;
+﻿using AssetsRestApi;
 using Xunit;
 
-namespace AssetRestApiCoreTest
+namespace AssetsRestApiTest
 {
     public class UnitTests
     {

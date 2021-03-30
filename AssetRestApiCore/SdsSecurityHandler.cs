@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 
-namespace AssetRestApiCore
+namespace AssetsRestApi
 {
     public sealed class SdsSecurityHandler : DelegatingHandler
     {

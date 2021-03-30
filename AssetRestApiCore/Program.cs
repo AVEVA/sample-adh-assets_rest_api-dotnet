@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace AssetRestApiCore
+namespace AssetsRestApi
 {
     public static class Program
     {
@@ -21,7 +21,7 @@ namespace AssetRestApiCore
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.placeholder.json");
+                .AddJsonFile("appsettings.json");
             _configuration = builder.Build();
 
             // ==== Client constants ====

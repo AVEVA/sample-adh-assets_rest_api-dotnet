@@ -5,16 +5,18 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{77FF66B6-5E7D-4BDB-BBBB-2951AF2CEC17}"
 	ProjectSection(SolutionItems) = preProject
-		azure-pipeline.yml = azure-pipeline.yml
-		..\..\..\..\Directory.Build.props = ..\..\..\..\Directory.Build.props
-		..\..\..\..\Extensions.ruleset = ..\..\..\..\Extensions.ruleset
-		..\..\..\..\OSIsoft.ruleset = ..\..\..\..\OSIsoft.ruleset
+		.editorconfig = .editorconfig
+		azure-pipelines.yml = azure-pipelines.yml
+		Directory.Build.props = Directory.Build.props
+		HISTORY.md = HISTORY.md
 		polaris.yml = polaris.yml
+		README.md = README.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetRestApiCore", "AssetRestApiCore\AssetRestApiCore.csproj", "{CBDEF3B8-96DE-48A6-A445-7865D4A1044E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetsRestApi", "AssetRestApiCore\AssetsRestApi.csproj", "{CBDEF3B8-96DE-48A6-A445-7865D4A1044E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetRestApiCoreTest", "AssetRestApiCoreTest\AssetRestApiCoreTest.csproj", "{6B8B3B54-F1FA-46A7-8BB8-3899E02D5A52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetsRestApiTest", "AssetRestApiCoreTest\AssetsRestApiTest.csproj", "{6B8B3B54-F1FA-46A7-8BB8-3899E02D5A52}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CBDEF3B8-96DE-48A6-A445-7865D4A1044E} = {CBDEF3B8-96DE-48A6-A445-7865D4A1044E}
 	EndProjectSection

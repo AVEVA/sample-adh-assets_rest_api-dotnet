@@ -2,70 +2,73 @@ trigger:
   batch: true
   branches:
     include:
-      - master
-  paths:
-    include:
-      - '/'
+      - main
 
 pr:
   branches:
     include:
-      - master
-  paths:
-    include:
-      - '/'
+      - main
 
 schedules:
   - cron: '0 0 * * 0'
     displayName: Weekly build
     branches:
       include:
-        - master
+        - main
     always: true
 
 resources:
   repositories:
-  - repository: templates
-    type: github
-    name: osisoft/OSI-Samples
-    endpoint: osisoft/OSI-Samples
+    - repository: templates
+      type: github
+      name: osisoft/OSI-Samples
+      endpoint: osisoft/OSI-Samples
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
-  - name: projPath
-    value: '/'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
-    value: product-readiness.sds_dotnet_rest.json
+    value: product-readiness.assets_dotnet_rest.json
   - name: analysisProject
-    value: SDS_DotNet_REST
+    value: Assets_DotNet_REST
 
 jobs:
   - job: Tests
     strategy:
+      maxParallel: 1 # Avoid conflicts in OCS
       matrix:
         linux:
-          imageName: ubuntu-latest
+          agentOS: Linux
         windows:
-          imageName: windows-latest
+          agentOS: Windows_NT
     pool:
-      vmImage: $(imageName)
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals $(agentOS)
     steps:
       - template: '/miscellaneous/build_templates/config.yml@templates'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)/SdsRestApiCore
+          filePath: /SdsRestApiCore
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
         inputs:
           command: test
           publishTestResults: true
-          testRunTitle: '$(Agent.JobName) on $(imageName)'
-          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+          testRunTitle: '$(Agent.JobName) on $(Agent.OS)'
 
-  - template: '/miscellaneous/build_templates/analysis.yml@templates'
-    parameters:
-      language: dotnet
+  - job: Analysis
+    pool:
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals Windows_NT
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Build'
+        inputs:
+          command: build
+
+      - template: '/miscellaneous/build_templates/binskim.yml@templates'
+
+      - template: '/miscellaneous/build_templates/analysis.yml@templates'
