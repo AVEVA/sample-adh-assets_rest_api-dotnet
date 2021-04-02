@@ -51,7 +51,6 @@ namespace AssetsRestApi
             const string MetadataOnAssetName = "MetadataWasSetOnAsset";
             const string UomOnAssetType = "V";
             const string UomOnAsset = "mV";
-            const string StatusName = "OrderStatus";
 
             // Step 1
             _securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
@@ -171,7 +170,6 @@ namespace AssetsRestApi
 
                     var statusMapping = new StatusMappingDto
                     {
-                        Name = StatusName,
                         StreamReferenceId = typeReference.StreamReferenceId,
                         StreamPropertyId = nameof(wave.Order),
                         ValueStatusMappings = new List<ValueStatusMappingDto>
