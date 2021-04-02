@@ -130,11 +130,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data", UriKind.Relative),
                             content4b)
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     // ASSETS:
                     // Step 5
@@ -153,11 +149,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{SimpleAssetId}", UriKind.Relative),
                             simpleAssetString)
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     // Step 6
                     // Create AssetType + Asset
@@ -219,11 +211,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{AssetTypeId}", UriKind.Relative),
                             assetTypeString)
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     // Step 7
                     Console.WriteLine("Creating Asset with AssetType");
@@ -264,11 +252,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
                             assetString)
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     // Step 8
                     // Get Asset 
@@ -276,6 +260,7 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative))
                         .ConfigureAwait(false);
+                    CheckIfResponseWasSuccessful(response);
 
                     var returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine($"Returned Asset has Id {returnedAsset.Id} and Name {returnedAsset.Name} \n");
@@ -287,14 +272,10 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/resolved", UriKind.Relative))
                         .ConfigureAwait(false);
+                    CheckIfResponseWasSuccessful(response);
 
                     returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine($"Asset null values get overriden by its AssetType (if one exists) when resolved: Asset Description = {returnedAsset.Description} \n");
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
 
                     // Step 10
                     // Update Asset
@@ -316,11 +297,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
                             updatedAssetString)
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     // Step 11
                     // Getting Asset Back and looking at Inheritance 
@@ -328,12 +305,8 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative))
                         .ConfigureAwait(false);
+                    CheckIfResponseWasSuccessful(response);
                     var updatedAssetReturned = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
 
                     Console.WriteLine(updatedAssetReturned.ToString());
 
@@ -344,6 +317,7 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/Data/Last", UriKind.Relative))
                         .ConfigureAwait(false);
+                    CheckIfResponseWasSuccessful(response);
 
                     var data = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(data.ToString());
@@ -353,6 +327,7 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}/Status/Last", UriKind.Relative))
                         .ConfigureAwait(false);
+                    CheckIfResponseWasSuccessful(response);
 
                     var status = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(status.ToString());
@@ -363,11 +338,7 @@ namespace AssetsRestApi
                     response = await httpClient.GetAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets?query=AssetTypeId:{AssetTypeId}", UriKind.Relative))
                         .ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException();
-                    }
+                    CheckIfResponseWasSuccessful(response);
 
                     var foundAsset = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(foundAsset.ToString());
