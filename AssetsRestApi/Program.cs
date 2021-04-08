@@ -75,7 +75,6 @@ namespace AssetsRestApi
                     // Step 2
                     // create a SdsType
                     Console.WriteLine("Creating an SdsType");
-                    Console.WriteLine(clientId);
                     var waveType = BuildWaveDataType(TypeId);
                     using var content2 = new StringContent(JsonConvert.SerializeObject(waveType));
                     var response =
