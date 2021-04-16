@@ -105,19 +105,8 @@ namespace AssetsRestApi
                     Console.WriteLine("Inserting data");
 
                     // insert a single event
-                    var singleWaveList = new List<WaveData>();
-                    var wave = GetWave(0, 2.0);
-                    singleWaveList.Add(wave);
-                    using var content4a = new StringContent(JsonConvert.SerializeObject(singleWaveList));
-                    response = await httpClient.PostAsync(
-                        new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data", UriKind.Relative),
-                        content4a)
-                        .ConfigureAwait(false);
-                    CheckIfResponseWasSuccessful(response);
-
-                    // insert a list of events
                     var waves = new List<WaveData>();
-                    for (int i = 2; i < 20; i += 2)
+                    for (int i = 0; i < 20; i += 2)
                     {
                         WaveData newEvent = GetWave(i, 2.0);
                         waves.Add(newEvent);
@@ -170,7 +159,7 @@ namespace AssetsRestApi
                     var statusMapping = new StatusMappingDto
                     {
                         StreamReferenceId = typeReference.StreamReferenceId,
-                        StreamPropertyId = nameof(wave.Order),
+                        StreamPropertyId = nameof(WaveData.Order),
                         ValueStatusMappings = new List<ValueStatusMappingDto>
                         {
                             new ValueStatusMappingDto
@@ -277,18 +266,9 @@ namespace AssetsRestApi
                     // Step 10
                     // Update Asset
                     // Changing the Description 
-                    var updatedAsset = new Asset
-                    {
-                        Id = AssetId,
-                        Name = AssetName,
-                        AssetTypeId = AssetTypeId,
-                        Description = "My First Asset with AssetType!",
-                        StreamReferences = new List<StreamReferenceDto> { streamReference },
-                        Metadata = new List<MetadataDto> { metadataOnAsset, metadataInherited },
-                    };
-
+                    asset.Description = "My First Asset with AssetType!";
                     Console.WriteLine("Updating Asset To fix Description.");
-                    using var updatedAssetString = new StringContent(JsonConvert.SerializeObject(updatedAsset));
+                    using var updatedAssetString = new StringContent(JsonConvert.SerializeObject(asset));
                     updatedAssetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PutAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
