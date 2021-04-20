@@ -1,4 +1,4 @@
-﻿namespace AssetRestApiCore
+﻿namespace AssetsRestApi
 {
     public sealed class ValueStatusMappingDto
     {

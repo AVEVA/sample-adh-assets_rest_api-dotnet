@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace AssetRestApiCore
+namespace AssetsRestApi
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Data Transfer Object (DTO) requires setter")]
-    public class SdsType
+    public class Asset
     {
         public string Id { get; set; }
 
@@ -11,8 +11,12 @@ namespace AssetRestApiCore
 
         public string Description { get; set; }
 
-        public SdsTypeCode SdsTypeCode { get; set; }
+        public string AssetTypeId { get; set; }
 
-        public IList<SdsTypeProperty> Properties { get; set; }
+        public List<MetadataDto> Metadata { get; set; } = new List<MetadataDto>();
+
+        public List<StreamReferenceDto> StreamReferences { get; set; } = new List<StreamReferenceDto>();
+
+        public StatusMappingDto Status { get; set; }
     }
 }

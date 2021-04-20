@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace AssetRestApiCore
+namespace AssetsRestApi
 {
     public class WaveData
     {

@@ -1,4 +1,4 @@
-﻿namespace AssetRestApiCore
+﻿namespace AssetsRestApi
 {
     /// <summary>
     /// Pre-defined asset status values. 

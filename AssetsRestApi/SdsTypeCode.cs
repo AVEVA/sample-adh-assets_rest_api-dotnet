@@ -1,4 +1,4 @@
-﻿namespace AssetRestApiCore
+﻿namespace AssetsRestApi
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Maps type names from Sequential Data Store")]
     public enum SdsTypeCode

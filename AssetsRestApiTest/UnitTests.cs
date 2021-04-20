@@ -1,12 +1,12 @@
-﻿using AssetRestApiCore;
+﻿using AssetsRestApi;
 using Xunit;
 
-namespace AssetRestApiCoreTest
+namespace AssetsRestApiTests
 {
     public class UnitTests
     {
         [Fact]
-        public void AssetRestApiCoreUnitTest()
+        public void AssetsRestApiUnitTest()
         {
             Assert.True(Program.MainAsync(true).Result);
         }

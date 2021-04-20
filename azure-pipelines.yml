@@ -1,0 +1,74 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - main
+    always: true
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: osisoft/OSI-Samples
+      endpoint: osisoft/OSI-Samples
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml@templates'
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: product-readiness.assets_dotnet_rest.json
+  - name: analysisProject
+    value: Assets_DotNet_REST
+
+jobs:
+  - job: Tests
+    strategy:
+      maxParallel: 1 # Avoid conflicts in OCS
+      matrix:
+        linux:
+          agentOS: Linux
+        windows:
+          agentOS: Windows_NT
+    pool:
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals $(agentOS)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml@templates'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: /AssetsRestApi
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Run tests'
+        inputs:
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(Agent.OS)'
+
+  - job: Analysis
+    pool:
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals Windows_NT
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Build'
+        inputs:
+          command: build
+
+      - template: '/miscellaneous/build_templates/binskim.yml@templates'
+
+      - template: '/miscellaneous/build_templates/analysis.yml@templates'
