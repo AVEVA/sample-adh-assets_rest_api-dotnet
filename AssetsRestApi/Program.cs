@@ -151,7 +151,7 @@ namespace AssetsRestApi
                     {
                         Id = MetadataOnAssetTypeId,
                         Name = MetadataOnAssetTypeName,
-                        Description = "Metadata Name, SdsTypeCode and Uom Inherited from AssetType",
+                        Description = "We are going to use this metadata to show inheritance",
                         Uom = UomOnAssetType,
                         SdsTypeCode = SdsTypeCode.Int64,
                     };
@@ -207,11 +207,7 @@ namespace AssetsRestApi
                         StreamId = waveStream.Id,
                     };
 
-                    var metadataInherited = new MetadataDto
-                    {
-                        Id = MetadataOnAssetTypeId,
-                        Description = "Metadata Name, SdsTypeCode and Uom Inherited from AssetType",
-                    };
+                    var metadataInherited = new MetadataDto { Id = MetadataOnAssetTypeId };
 
                     var metadataOnAsset = new MetadataDto
                     {
