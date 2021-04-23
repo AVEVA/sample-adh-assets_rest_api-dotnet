@@ -205,14 +205,9 @@ namespace AssetsRestApi
                     {
                         Id = StreamReferenceId,
                         StreamId = waveStream.Id,
-                        Description = "streamReference On Asset",
                     };
 
-                    var metadataInherited = new MetadataDto
-                    {
-                        Id = MetadataOnAssetTypeId,
-                        Description = "Metadata Name, SdsTypeCode and Uom Inherited from AssetType",
-                    };
+                    var metadataInherited = new MetadataDto { Id = MetadataOnAssetTypeId };
 
                     var metadataOnAsset = new MetadataDto
                     {
