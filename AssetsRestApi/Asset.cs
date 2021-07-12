@@ -17,6 +17,6 @@ namespace AssetsRestApi
 
         public List<StreamReferenceDto> StreamReferences { get; set; } = new List<StreamReferenceDto>();
 
-        public StatusMappingDto Status { get; set; }
+        public StatusConfigurationDto Status { get; set; }
     }
 }

@@ -15,6 +15,6 @@ namespace AssetsRestApi
 
         public List<TypeReferenceDto> TypeReferences { get; set; } = new List<TypeReferenceDto>();
 
-        public StatusMappingDto Status { get; set; }
+        public StatusConfigurationDto Status { get; set; }
     }
 }

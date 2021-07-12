@@ -156,26 +156,29 @@ namespace AssetsRestApi
                         SdsTypeCode = SdsTypeCode.Int64,
                     };
 
-                    var statusMapping = new StatusMappingDto
+                    var statusMapping = new StatusConfigurationDto
                     {
-                        StreamReferenceId = typeReference.StreamReferenceId,
-                        StreamPropertyId = nameof(WaveData.Order),
-                        ValueStatusMappings = new List<ValueStatusMappingDto>
+                        Definition = new StatusMappingDto
                         {
-                            new ValueStatusMappingDto
+                            StreamReferenceId = typeReference.StreamReferenceId,
+                            StreamPropertyId = nameof(WaveData.Order),
+                            ValueStatusMappings = new List<ValueStatusMappingDto>
                             {
-                                Value = 0,
-                                Status = StatusEnum.Warning,
-                            },
-                            new ValueStatusMappingDto
-                            {
-                                Value = 10,
-                                Status = StatusEnum.Good,
-                            },
-                            new ValueStatusMappingDto
-                            {
-                                Value = 18,
-                                Status = StatusEnum.Bad,
+                                new ValueStatusMappingDto
+                                {
+                                    Value = 0,
+                                    Status = StatusEnum.Warning,
+                                },
+                                new ValueStatusMappingDto
+                                {
+                                    Value = 10,
+                                    Status = StatusEnum.Good,
+                                },
+                                new ValueStatusMappingDto
+                                {
+                                    Value = 18,
+                                    Status = StatusEnum.Bad,
+                                },
                             },
                         },
                     };
