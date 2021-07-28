@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.4 / 2021-07-22
+
+- Standardized code style rules
+
 ## 1.0.3 / 2021-07-15
 
 - Added new StatusConfigurationDto class to sync with latest REST API
