@@ -38,11 +38,12 @@ OSIsoft Cloud Services is secured by obtaining tokens from its identity endpoint
 
 ```json
 {
-  "NamespaceId": "REPLACE_WITH_NAMESPACE_ID",
-  "TenantId": "REPLACE_WITH_TENANT_ID",
+  "NamespaceId": "PLACEHOLDER_REPLACE_WITH_NAMESPACE_ID",
+  "TenantId": "PLACEHOLDER_REPLACE_WITH_TENANT_ID",
   "Resource": "https://dat-b.osisoft.com",
-  "ClientId": "REPLACE_WITH_APPLICATION_IDENTIFIER",
-  "ClientKey": "REPLACE_WITH_APPLICATION_SECRET"
+  "ClientId": "PLACEHOLDER_REPLACE_WITH_CLIENT_ID",
+  "ClientSecret": "PLACEHOLDER_REPLACE_WITH_CLIENT_SECRET",
+  "ApiVersion": "v1-preview"
 }
 ```
 
