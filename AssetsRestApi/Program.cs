@@ -29,7 +29,7 @@ namespace AssetsRestApi
             var namespaceId = _configuration["NamespaceId"];
             var resource = _configuration["Resource"];
             var clientId = _configuration["ClientId"];
-            var clientKey = _configuration["ClientKey"];
+            var clientSecret = _configuration["ClientSecret"];
             var apiVersion = _configuration["ApiVersion"];
 
             // ==== IDs ====
