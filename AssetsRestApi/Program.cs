@@ -53,7 +53,7 @@ namespace AssetsRestApi
             const string UomOnAsset = "mV";
 
             // Step 1
-            _securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
+            _securityHandler = new SdsSecurityHandler(resource, clientId, clientSecret);
             using (var httpClient = new HttpClient(_securityHandler) { BaseAddress = new Uri(resource) })
             {
                 httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
