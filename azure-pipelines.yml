@@ -45,7 +45,7 @@ jobs:
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'ClientSecret, ClientId, TenantId'
+          secrets: 'ClientSecret, ClientId, TenantId, NamespaceId'
 
       - task: DotNetCoreCLI@2
         displayName: 'Nuget restore'
