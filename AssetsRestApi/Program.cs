@@ -29,7 +29,7 @@ namespace AssetsRestApi
             var namespaceId = _configuration["NamespaceId"];
             var resource = _configuration["Resource"];
             var clientId = _configuration["ClientId"];
-            var clientKey = _configuration["ClientKey"];
+            var clientSecret = _configuration["ClientSecret"];
             var apiVersion = _configuration["ApiVersion"];
 
             // ==== IDs ====
@@ -53,7 +53,7 @@ namespace AssetsRestApi
             const string UomOnAsset = "mV";
 
             // Step 1
-            _securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
+            _securityHandler = new SdsSecurityHandler(resource, clientId, clientSecret);
             using (var httpClient = new HttpClient(_securityHandler) { BaseAddress = new Uri(resource) })
             {
                 httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");

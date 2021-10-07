@@ -26,10 +26,6 @@ resources:
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml@templates'
-  - name: CredFile
-    value: appsettings.json
-  - name: CredFileLibrary
-    value: product-readiness.assets_dotnet_rest.json
   - name: analysisProject
     value: Assets_DotNet_REST
 
@@ -46,11 +42,9 @@ jobs:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals $(agentOS)
     steps:
-      - template: '/miscellaneous/build_templates/config.yml@templates'
+      - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibrary)
-          filePath: /AssetsRestApi
+          secrets: 'ClientSecret, ClientId, TenantId, NamespaceId'
 
       - task: DotNetCoreCLI@2
         displayName: 'Nuget restore'
