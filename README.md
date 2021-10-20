@@ -1,6 +1,6 @@
 # OSIsoft Cloud Services Assets .NET REST API Sample
 
-**Version:** 1.0.5
+**Version:** 1.0.6
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-assets_rest_api-dotnet?repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main)
 
