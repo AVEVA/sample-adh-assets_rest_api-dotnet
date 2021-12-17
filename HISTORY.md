@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.7 / 2021-12-18
+
+- Remove reliance on Asset V1-preview routes
+
 ## 1.0.6 / 2021-10-20
 
 - Updated dependencies
