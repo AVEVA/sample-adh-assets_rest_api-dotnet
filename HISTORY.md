@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.8 / 2021-12-07
+## 1.0.8 / 2022-01-06
 
 - Update pipelines to reference internal analysis templates
 
