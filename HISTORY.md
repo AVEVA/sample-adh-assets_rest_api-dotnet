@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.8 / 2022-01-06
+
+- Update pipelines to reference internal analysis templates
+
 ## 1.0.7 / 2021-12-18
 
 - Remove reliance on Asset V1-preview routes
