@@ -43,7 +43,7 @@ OSIsoft Cloud Services is secured by obtaining tokens from its identity endpoint
   "Resource": "https://dat-b.osisoft.com",
   "ClientId": "PLACEHOLDER_REPLACE_WITH_CLIENT_ID",
   "ClientSecret": "PLACEHOLDER_REPLACE_WITH_CLIENT_SECRET",
-  "ApiVersion": "v1-preview"
+  "ApiVersion": "v1"
 }
 ```
 
