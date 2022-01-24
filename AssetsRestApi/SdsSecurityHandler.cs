@@ -49,7 +49,7 @@ namespace AssetsRestApi
                 Address = _resource + "/identity",
                 Policy = new DiscoveryPolicy
                 {
-                    Authority = "https://identity.osisoft.com",
+                    Authority = "https://identity.aveva.com",
                     ValidateEndpoints = false,
                     ValidateIssuerName = false,
                 },
