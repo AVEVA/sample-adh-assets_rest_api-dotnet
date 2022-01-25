@@ -15,14 +15,14 @@ The [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) is refe
 
 ## About this sample
 
-This sample uses REST API calls to work with assets and asset types in AHD. It follows a set of steps to demonstrate the usage of various asset endpoints.
+This sample uses REST API calls to work with assets and asset types in ADH. It follows a set of steps to demonstrate the usage of various asset endpoints.
 
-1. Obtain an OAuth token for AHD, using a client-credentials client
+1. Obtain an OAuth token for ADH, using a client-credentials client
 1. Create an SDS type
 1. Create an SDS stream
 1. Insert data into the stream
-1. Create an AHD asset
-1. Create an AHD asset type
+1. Create an ADH asset
+1. Create an ADH asset type
 1. Create an asset from an asset type
 1. Retrieve an asset
 1. Retrieve a resolved asset
@@ -37,7 +37,7 @@ This sample uses REST API calls to work with assets and asset types in AHD. It f
 
 The sample is configured using the file [appsettings.placeholder.json](AssetsRestApi/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
-AVEVA Data Hub is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your AHD tenant.
+AVEVA Data Hub is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your ADH tenant.
 
 ```json
 {
@@ -71,6 +71,6 @@ dotnet test
 ---
 
 Tested against DotNet 5.0.  
-For the AHD Assets samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/ASSETS.md)  
-For the main AHD samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the ADH Assets samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/ASSETS.md)  
+For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main AVEVA samples page [ReadMe](https://github.com/osisoft/OSI-Samples)

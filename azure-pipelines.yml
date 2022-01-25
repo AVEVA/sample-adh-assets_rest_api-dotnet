@@ -36,7 +36,7 @@ variables:
 jobs:
   - job: Tests
     strategy:
-      maxParallel: 1 # Avoid conflicts in AHD
+      maxParallel: 1 # Avoid conflicts in ADH
       matrix:
         linux:
           agentOS: Linux
