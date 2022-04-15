@@ -26,7 +26,7 @@ namespace AssetsRestApi
 
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            StringBuilder builder = new ();
             builder.Append($"Order: {Order}");
             builder.Append($", Radians: {Radians}");
             builder.Append($", Tau: {Tau}");

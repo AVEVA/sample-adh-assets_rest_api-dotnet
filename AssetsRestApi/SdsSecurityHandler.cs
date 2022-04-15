@@ -43,8 +43,8 @@ namespace AssetsRestApi
                 return _accessToken;
             }
 
-            using var client = new HttpClient();
-            using var discoveryRequest = new DiscoveryDocumentRequest
+            using HttpClient client = new ();
+            using DiscoveryDocumentRequest discoveryRequest = new ()
             {
                 Address = _resource + "/identity",
                 Policy = new DiscoveryPolicy
@@ -55,12 +55,12 @@ namespace AssetsRestApi
                 },
             };
 
-            var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken).ConfigureAwait(false);
+            DiscoveryDocumentResponse discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken).ConfigureAwait(false);
 
             if (discoveryResponse.IsError)
                 throw new InvalidOperationException(discoveryResponse.Error);
 
-            using var clientCredentialsTokenRequest = new ClientCredentialsTokenRequest
+            using ClientCredentialsTokenRequest clientCredentialsTokenRequest = new ()
             {
                 Address = discoveryResponse.TokenEndpoint,
                 ClientId = _clientId,
@@ -68,9 +68,9 @@ namespace AssetsRestApi
                 Scope = "ocsapi",
             };
 
-            var now = DateTime.UtcNow;
+            DateTime now = DateTime.UtcNow;
 
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest, cancellationToken).ConfigureAwait(false);
+            TokenResponse tokenResponse = await client.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest, cancellationToken).ConfigureAwait(false);
 
             if (discoveryResponse.IsError)
                 throw new InvalidOperationException(tokenResponse.Error);

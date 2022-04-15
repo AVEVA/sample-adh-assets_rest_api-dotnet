@@ -19,18 +19,18 @@ namespace AssetsRestApi
 
         public static async Task<bool> MainAsync(bool test = false)
         {
-            var builder = new ConfigurationBuilder()
+            IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
             _configuration = builder.Build();
 
             // ==== Client constants ====
-            var tenantId = _configuration["TenantId"];
-            var namespaceId = _configuration["NamespaceId"];
-            var resource = _configuration["Resource"];
-            var clientId = _configuration["ClientId"];
-            var clientSecret = _configuration["ClientSecret"];
-            var apiVersion = _configuration["ApiVersion"];
+            string tenantId = _configuration["TenantId"];
+            string namespaceId = _configuration["NamespaceId"];
+            string resource = _configuration["Resource"];
+            string clientId = _configuration["ClientId"];
+            string clientSecret = _configuration["ClientSecret"];
+            string apiVersion = _configuration["ApiVersion"];
 
             // ==== IDs ====
             const string StreamId = "WaveStreamId";
@@ -54,7 +54,7 @@ namespace AssetsRestApi
 
             // Step 1
             _securityHandler = new SdsSecurityHandler(resource, clientId, clientSecret);
-            using (var httpClient = new HttpClient(_securityHandler) { BaseAddress = new Uri(resource) })
+            using (HttpClient httpClient = new (_securityHandler) { BaseAddress = new Uri(resource) })
             {
                 httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
 
@@ -75,9 +75,9 @@ namespace AssetsRestApi
                     // Step 2
                     // create a SdsType
                     Console.WriteLine("Creating an SdsType");
-                    var waveType = BuildWaveDataType(TypeId);
-                    using var content2 = new StringContent(JsonConvert.SerializeObject(waveType));
-                    var response =
+                    SdsType waveType = BuildWaveDataType(TypeId);
+                    using StringContent content2 = new (JsonConvert.SerializeObject(waveType));
+                    HttpResponseMessage response =
                         await httpClient.PostAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{waveType.Id}", UriKind.Relative),
                             content2)
@@ -87,13 +87,13 @@ namespace AssetsRestApi
                     // Step 3
                     // create a SdsStream
                     Console.WriteLine("Creating an SdsStream");
-                    var waveStream = new SdsStream
+                    SdsStream waveStream = new ()
                     {
                         Id = StreamId,
                         Name = "WaveStream",
                         TypeId = waveType.Id,
                     };
-                    using var content3 = new StringContent(JsonConvert.SerializeObject(waveStream));
+                    using StringContent content3 = new (JsonConvert.SerializeObject(waveStream));
                     response = await httpClient.PostAsync(
                         new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}", UriKind.Relative),
                         content3)
@@ -105,14 +105,14 @@ namespace AssetsRestApi
                     Console.WriteLine("Inserting data");
 
                     // insert a single event
-                    var waves = new List<WaveData>();
+                    List<WaveData> waves = new ();
                     for (int i = 0; i < 20; i += 2)
                     {
                         WaveData newEvent = GetWave(i, 2.0);
                         waves.Add(newEvent);
                     }
 
-                    using var content4b = new StringContent(JsonConvert.SerializeObject(waves));
+                    using StringContent content4b = new (JsonConvert.SerializeObject(waves));
                     response = await httpClient.PostAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data", UriKind.Relative),
                             content4b)
@@ -123,14 +123,14 @@ namespace AssetsRestApi
                     // Step 5
                     // Create Simple Asset
                     Console.WriteLine("Creating Basic Asset");
-                    var simpleAsset = new Asset
+                    Asset simpleAsset = new ()
                     {
                         Id = SimpleAssetId,
                         Name = SimpleAssetName,
                         Description = "My First Asset!",
                     };
 
-                    using var simpleAssetString = new StringContent(JsonConvert.SerializeObject(simpleAsset));
+                    using StringContent simpleAssetString = new (JsonConvert.SerializeObject(simpleAsset));
                     simpleAssetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{SimpleAssetId}", UriKind.Relative),
@@ -140,14 +140,14 @@ namespace AssetsRestApi
 
                     // Step 6
                     // Create AssetType + Asset
-                    var typeReference = new TypeReferenceDto
+                    TypeReferenceDto typeReference = new ()
                     {
                         StreamReferenceId = StreamReferenceId,
                         StreamReferenceName = StreamReferenceName,
                         TypeId = TypeId,
                     };
 
-                    var metadataOnType = new MetadataDto
+                    MetadataDto metadataOnType = new ()
                     {
                         Id = MetadataOnAssetTypeId,
                         Name = MetadataOnAssetTypeName,
@@ -156,7 +156,7 @@ namespace AssetsRestApi
                         SdsTypeCode = SdsTypeCode.Int64,
                     };
 
-                    var statusMapping = new StatusConfigurationDto
+                    StatusConfigurationDto statusMapping = new ()
                     {
                         Definition = new StatusMappingDto
                         {
@@ -184,7 +184,7 @@ namespace AssetsRestApi
                     };
 
                     Console.WriteLine("Creating AssetType");
-                    var assetType = new AssetType
+                    AssetType assetType = new ()
                     {
                         Id = AssetTypeId,
                         Name = AssetTypeName,
@@ -194,7 +194,7 @@ namespace AssetsRestApi
                         Status = statusMapping,
                     };
 
-                    using var assetTypeString = new StringContent(JsonConvert.SerializeObject(assetType));
+                    using StringContent assetTypeString = new (JsonConvert.SerializeObject(assetType));
                     assetTypeString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/AssetTypes/{AssetTypeId}", UriKind.Relative),
@@ -204,15 +204,15 @@ namespace AssetsRestApi
 
                     // Step 7
                     Console.WriteLine("Creating Asset with AssetType");
-                    var streamReference = new StreamReferenceDto
+                    StreamReferenceDto streamReference = new ()
                     {
                         Id = StreamReferenceId,
                         StreamId = waveStream.Id,
                     };
 
-                    var metadataInherited = new MetadataDto { Id = MetadataOnAssetTypeId };
+                    MetadataDto metadataInherited = new () { Id = MetadataOnAssetTypeId };
 
-                    var metadataOnAsset = new MetadataDto
+                    MetadataDto metadataOnAsset = new ()
                     {
                         Id = MetadataOnAssetId,
                         Name = MetadataOnAssetName,
@@ -221,7 +221,7 @@ namespace AssetsRestApi
                         SdsTypeCode = SdsTypeCode.Double,
                     };
 
-                    var asset = new Asset
+                    Asset asset = new ()
                     {
                         Id = AssetId,
                         Name = AssetName,
@@ -230,7 +230,7 @@ namespace AssetsRestApi
                         Metadata = new List<MetadataDto> { metadataOnAsset, metadataInherited },
                     };
 
-                    using var assetString = new StringContent(JsonConvert.SerializeObject(asset));
+                    using StringContent assetString = new (JsonConvert.SerializeObject(asset));
                     assetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PostAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
@@ -246,7 +246,7 @@ namespace AssetsRestApi
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
 
-                    var returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    Asset returnedAsset = JsonConvert.DeserializeObject<Asset>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine($"Returned Asset has Id {returnedAsset.Id} and Name {returnedAsset.Name} \n");
 
                     // Step 9
@@ -266,7 +266,7 @@ namespace AssetsRestApi
                     // Changing the Description 
                     asset.Description = "My First Asset with AssetType!";
                     Console.WriteLine("Updating Asset To fix Description.");
-                    using var updatedAssetString = new StringContent(JsonConvert.SerializeObject(asset));
+                    using StringContent updatedAssetString = new (JsonConvert.SerializeObject(asset));
                     updatedAssetString.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     response = await httpClient.PutAsync(
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative),
@@ -281,7 +281,7 @@ namespace AssetsRestApi
                             new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Assets/{AssetId}", UriKind.Relative))
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
-                    var updatedAssetReturned = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    object updatedAssetReturned = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
                     Console.WriteLine(updatedAssetReturned.ToString());
 
@@ -294,7 +294,7 @@ namespace AssetsRestApi
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
 
-                    var data = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    object data = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(data.ToString());
 
                     // Step 13
@@ -304,7 +304,7 @@ namespace AssetsRestApi
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
 
-                    var status = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    object status = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(status.ToString());
 
                     // Step 14
@@ -315,7 +315,7 @@ namespace AssetsRestApi
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
 
-                    var foundAsset = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    object foundAsset = JsonConvert.DeserializeObject<object>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
                     Console.WriteLine(foundAsset.ToString());
                 }
                 catch (Exception e)
@@ -378,74 +378,74 @@ namespace AssetsRestApi
 
         private static SdsType BuildWaveDataType(string id)
         {
-            var intSdsType = new SdsType
+            SdsType intSdsType = new ()
             {
                 Id = "intSdsType",
                 SdsTypeCode = SdsTypeCode.Int32,
             };
 
-            var doubleSdsType = new SdsType
+            SdsType doubleSdsType = new ()
             {
                 Id = "doubleSdsType",
                 SdsTypeCode = SdsTypeCode.Double,
             };
 
-            var orderProperty = new SdsTypeProperty
+            SdsTypeProperty orderProperty = new ()
             {
                 Id = "Order",
                 SdsType = intSdsType,
                 IsKey = true,
             };
 
-            var tauProperty = new SdsTypeProperty
+            SdsTypeProperty tauProperty = new ()
             {
                 Id = "Tau",
                 SdsType = doubleSdsType,
             };
 
-            var radiansProperty = new SdsTypeProperty
+            SdsTypeProperty radiansProperty = new ()
             {
                 Id = "Radians",
                 SdsType = doubleSdsType,
             };
 
-            var sinProperty = new SdsTypeProperty
+            SdsTypeProperty sinProperty = new ()
             {
                 Id = "Sin",
                 SdsType = doubleSdsType,
             };
 
-            var cosProperty = new SdsTypeProperty
+            SdsTypeProperty cosProperty = new ()
             {
                 Id = "Cos",
                 SdsType = doubleSdsType,
             };
 
-            var tanProperty = new SdsTypeProperty
+            SdsTypeProperty tanProperty = new ()
             {
                 Id = "Tan",
                 SdsType = doubleSdsType,
             };
 
-            var sinhProperty = new SdsTypeProperty
+            SdsTypeProperty sinhProperty = new ()
             {
                 Id = "Sinh",
                 SdsType = doubleSdsType,
             };
 
-            var coshProperty = new SdsTypeProperty
+            SdsTypeProperty coshProperty = new ()
             {
                 Id = "Cosh",
                 SdsType = doubleSdsType,
             };
 
-            var tanhProperty = new SdsTypeProperty
+            SdsTypeProperty tanhProperty = new ()
             {
                 Id = "Tanh",
                 SdsType = doubleSdsType,
             };
 
-            var waveType = new SdsType
+            SdsType waveType = new ()
             {
                 Id = id,
                 Name = "WaveData",
@@ -469,7 +469,7 @@ namespace AssetsRestApi
 
         private static WaveData GetWave(int order, double multiplier)
         {
-            var radians = order * (Math.PI / 32);
+            double radians = order * (Math.PI / 32);
 
             return new WaveData
             {
