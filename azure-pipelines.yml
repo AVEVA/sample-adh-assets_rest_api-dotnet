@@ -50,6 +50,12 @@ jobs:
         parameters:
           secrets: 'ClientSecret, ClientId, TenantId, NamespaceId, Resource'
 
+      - task: UseDotNet@2
+        displayName: 'Install dotnet 6'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
       - task: DotNetCoreCLI@2
         displayName: 'Nuget restore'
         inputs:
@@ -65,6 +71,12 @@ jobs:
   - template: '/miscellaneous/build_templates/code-analysis.yml@templates'
     parameters:
       buildSteps:
+        - task: UseDotNet@2
+          displayName: 'Install dotnet 6'
+          inputs:
+            packageType: 'sdk'
+            version: '6.x'
+
         - task: DotNetCoreCLI@2
           displayName: 'Nuget restore'
           inputs:
