@@ -3,11 +3,11 @@
 | :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub. The samples also work on OSIsoft Cloud Services unless otherwise noted. |
 | -----------------------------------------------------------------------------------------------|  
 
-**Version:** 1.0.11
+**Version:** 1.1.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-assets_rest_api-dotnet?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&branchName=main)
 
-Developed against DotNet 5.0.
+Developed against DotNet 6.0.
 
 ## Requirements
 
@@ -70,7 +70,7 @@ dotnet test
 
 ---
 
-Tested against DotNet 5.0.  
+Tested against DotNet 6.0.  
 For the ADH Assets samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/ASSETS.md)  
 For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main AVEVA samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
