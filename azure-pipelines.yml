@@ -33,6 +33,13 @@ variables:
   - name: analysisProject
     value: Assets_DotNet_REST
 
+parameters:
+  - name: pool
+    default: 00-OSIManaged-Containers
+  - name: containerDemands
+    type: object
+    default: ['Agent.OS -equals $(agentOS)']
+
 jobs:
   - job: Tests
     condition: ne(variables['Build.Reason'], 'Schedule')
@@ -44,8 +51,8 @@ jobs:
         windows:
           agentOS: Windows_NT
     pool:
-      name: 00-OSIManaged-Containers
-      demands: Agent.OS -equals $(agentOS)
+      name: ${{ parameters.pool }}
+      demands: ${{ parameters.containerDemands }}
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
