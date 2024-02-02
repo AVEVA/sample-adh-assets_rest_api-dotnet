@@ -1,6 +1,6 @@
 # AVEVA Data Hub Assets .NET REST API Sample
 
-**Version:** 1.1.3
+**Version:** 1.1.4
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-assets_rest_api-dotnet?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&branchName=main)
 
