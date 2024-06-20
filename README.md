@@ -1,4 +1,4 @@
-# AVEVA Data Hub Assets .NET REST API Sample
+# CONNECT data services Assets .NET REST API Sample
 
 **Version:** 1.1.4
 
@@ -34,7 +34,7 @@ This sample uses REST API calls to work with assets and asset types in ADH. It f
 
 The sample is configured using the file [appsettings.placeholder.json](AssetsRestApi/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
-AVEVA Data Hub is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your ADH tenant.
+CONNECT data services is secured by obtaining tokens from its identity endpoint. Client credentials clients provide a client application identifier and an associated secret (or key) that are authenticated against the token endpoint. You must replace the placeholders in your `appsettings.json` file with the authentication-related values from your tenant and a client-credentials client created in your ADH tenant.
 
 ```json
 {
